@@ -14,13 +14,14 @@ module.exports = function(content) {
   this.value = content;
   const config = loaderUtils.getOptions(this) || {
     onlyHtml: false,
+    minify: false
   };
 
   trackMjIncludeChanges.bind(this)(content);
 
   let result = {};
   try {
-    result = mjml(content, { level: 'soft' });
+    result = mjml(content, { level: 'soft', minify: config.minify });
   } catch (e) {
     result.html = displayErrors.bind(this)(e);
   }
